@@ -23,7 +23,9 @@ public class Server {
     JPanel stock_send_button = null;
     
     /* Constructor de la clase*/
-    public Server(){        
+    public Server(){
+        /* Constructor del metodo MakeInterface*/
+        MakeInterface();
     }
     /* Metodo para interfaz */
     public void MakeInterface(){
@@ -34,8 +36,12 @@ public class Server {
         message = new JTextField(4);
         /* titulo del boton enviar*/
         send_button = new JButton("Send");
+        /* Personalizar fuente de la letra que va contenida en el boton de enviar*/
+        send_button.setFont(new Font("Serif", Font.ITALIC, 20));
+        /* Personalizar color del fondo del boton*/
+        send_button.setBackground(Color.gray);
         /* Tamaño del cuadro blanco donde se reciben los mensajes*/
-        chat_area = new JTextArea(12, 14);
+        chat_area = new JTextArea(10, 12);
         /* contenedor */
         stock_chat = new JPanel();
         /* personalizacion del contenedor */
@@ -55,7 +61,7 @@ public class Server {
         /* Añadir Layout para ubicar el stock_send_button*/
         window_chat.add(stock_send_button, BorderLayout.SOUTH);
         /* Setear el tamaño de la ventana principal (window_chat) con los parametros (ancho, alto) */
-        window_chat.setSize(350, 380);
+        window_chat.setSize(300, 240);
         /* hacer que no sea posible cambiarle el tamaño a la ventana */
         window_chat.setResizable(false);
         /* Cambiar visibilidad de la ventana*/
@@ -63,6 +69,8 @@ public class Server {
         
     }
     public static void main(String [] args){
-
+        /* Instancia para que pueda arrancar el constructor de la interfaz*/
+        new Server();
+        
     }    
 } 
