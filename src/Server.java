@@ -50,7 +50,17 @@ public class Server {
         stock_send_button.add(message);
         /* añadir boton al contenedor */
         stock_send_button.add(send_button);
-
+        /* Añadir Layout a la ventana principal (JFrame), para ubicar el stock_chat */
+        window_chat.add(stock_chat, BorderLayout.NORTH);
+        /* Añadir Layout para ubicar el stock_send_button*/
+        window_chat.add(stock_send_button, BorderLayout.SOUTH);
+        /* Setear el tamaño de la ventana principal (window_chat) con los parametros (ancho, alto) */
+        window_chat.setSize(350, 380);
+        /* hacer que no sea posible cambiarle el tamaño a la ventana */
+        window_chat.setResizable(false);
+        /* Cambiar visibilidad de la ventana*/
+        window_chat.setVisible(true);
+        
     }
     public static void main(String [] args){
 
