@@ -33,6 +33,7 @@ public class Server {
         
         /* Asignación del titulo a la ventana*/
         window_chat = new JFrame("Server");
+        /* campo de texto del mensaje*/
         message = new JTextField(4);
         /* titulo del boton enviar*/
         send_button = new JButton("Send");
