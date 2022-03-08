@@ -27,17 +27,28 @@ public class Server {
     }
     /* Metodo para interfaz */
     public void MakeInterface(){
+        /*CREACIONES DE LOS OBJETOS*/
         
+        /* Asignación del titulo a la ventana*/
         window_chat = new JFrame("Server");
         message = new JTextField(4);
+        /* titulo del boton enviar*/
         send_button = new JButton("Send");
+        /* Tamaño del cuadro blanco donde se reciben los mensajes*/
         chat_area = new JTextArea(12, 14);
+        /* contenedor */
         stock_chat = new JPanel();
+        /* personalizacion del contenedor */
         stock_chat.setLayout(new GridLayout(1,1));
+        /* Añadir al contenedor el area del chat */
         stock_chat.add(chat_area);
+        /* contenedor2 */
         stock_send_button = new JPanel();
+        /* Personalizacion de contenedor2*/
         stock_send_button.setLayout(new GridLayout(1,2));
+        /* añadir mensaje */
         stock_send_button.add(message);
+        /* añadir boton al contenedor */
         stock_send_button.add(send_button);
 
     }
