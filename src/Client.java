@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -18,6 +19,8 @@ public class Client {
     
     JButton send_button = null;
     
+    JScrollPane scroll = null;
+  
     JPanel stock_chat = null;
     
     JPanel stock_send_button = null;
@@ -42,8 +45,9 @@ public class Client {
         stock_chat = new JPanel();
 
         stock_chat.setLayout(new GridLayout(1,1));
-
-        stock_chat.add(chat_area);
+        
+        scroll = new JScrollPane(chat_area);
+        stock_chat.add(scroll);
 
         stock_send_button = new JPanel();
 

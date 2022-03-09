@@ -18,6 +18,9 @@ public class Server {
     /* Jbutton: es un botón que tiene como objetivo interactuar con él para realizar una accion determinada */
     JButton send_button = null;
     
+    /*Jscrollpane: barra para desplazarse hacia abajo*/
+    JScrollPane scroll = null;
+    
     /* Jpanel: es un contenedor de componentes, botones, campos de texto etc...*/
     JPanel stock_chat = null;
     JPanel stock_send_button = null;
@@ -30,7 +33,7 @@ public class Server {
     /* Metodo para interfaz */
     public void MakeInterface(){
         /*CREACIONES DE LOS OBJETOS*/
-        
+            
         /* Asignación del titulo a la ventana*/
         window_chat = new JFrame("Server");
         /* campo de texto del mensaje*/
@@ -48,7 +51,8 @@ public class Server {
         /* personalizacion del contenedor */
         stock_chat.setLayout(new GridLayout(1,1));
         /* Añadir al contenedor el area del chat */
-        stock_chat.add(chat_area);
+        scroll = new JScrollPane(chat_area);
+        stock_chat.add(scroll);
         /* contenedor2 */
         stock_send_button = new JPanel();
         /* Personalizacion de contenedor2*/
@@ -67,7 +71,7 @@ public class Server {
         window_chat.setResizable(false);
         /* Cambiar visibilidad de la ventana*/
         window_chat.setVisible(true);
-        
+
     }
     public static void main(String [] args){
         /* Instancia para que pueda arrancar el constructor de la interfaz*/
