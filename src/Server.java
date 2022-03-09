@@ -1,3 +1,10 @@
+/* permite realizar conexiones y transacciones a través de la red */
+import java.net.*;
+/* encargado de gestionar las operaciones de entrada/salida */
+import java.io.*;
+/*ste paquete define eventos y detectores de eventos, así como adaptadores de detectores de eventos*/
+import java.awt.event.*;
+
 /*importar abstract window Toolkit (kit de herramientas grafico) */
 import java.awt.*;
 /* importar java swing (biblioteca grafica)*/
