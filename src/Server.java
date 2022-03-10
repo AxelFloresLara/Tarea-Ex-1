@@ -38,8 +38,11 @@ public class Server {
     /* Socket: Nos permite implementar la conexión por parte del cliente*/
     Socket client = null;
     
+    /* PrintWriter imprime representaciones formateadas de objetos en una secuencia como una salida de texto */
+    PrintWriter writer = null;
+    
     /* Buffered reader: Lee texto de un flujo de entrada de caracteres, almacenando en búfer los caracteres para proporcionar una lectura eficiente de caracteres*/
-    BufferedReader  reader = null;
+    BufferedReader reader = null;
     
     /* Constructor de la clase*/
     public Server(){
@@ -91,14 +94,37 @@ public class Server {
     }
     /*Crear metodo para leer los mensajes*/
     public void read(){
-    /* Utilizar un Try/Catch porque se trabaja con clases que posiblemente envíen excepciones*/
-       try{
-    /* Catch: captura las excepcion y se especifica cual puede ocurrir */  
-       }catch(Exception ex){
-    /* printStackTrace: es una herramienta utilizada para manejar excepciones y errores */
-           ex.printStackTrace();
-       }
-        
+        /*Thread: clase base de Java para definir hilos de ejecución concurrentes dentro de un mismo programa, Son los objetos los que actúan concurrentemente con otros */
+        /*Runnable proporciona un método alternativo a la utilización de la clase Thread, Esto ocurre cuando dicha clase, que se desea ejecutar en un hilo independiente deba extender alguna otra clase.*/
+        Thread read_thread = new Thread(new Runnable(){
+            
+            /*public void run () Este método especifica realmente la tarea a realizar*/
+            public void run(){
+                
+       /* Utilizar un Try/Catch porque se trabaja con clases que posiblemente envíen excepciones*/
+                try{
+           /* Con el objeto client y el metodo GetInputStream obtenemos la entrada de ese socket y asi podemos acceder a los metodos que nos permiten leer lo que nos envían*/
+                    reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
+           
+           /* se utiliza la expresión while true para repetir indefinidamente*/
+                        while(true){
+                    /* Todo lo que me envíe el cliente le voy a estar leyendo y lo voy a guardar en la variable de tipo str llamada message_received */
+                            String message_received = reader.readLine();
+                    
+                    /* ahora debemos adjuntar el mensaje que nos envían al campo en blanco llamado chat_area, con el append se agrega texto, concatenamos el mensaje recibido al "client say"*/
+                            chat_area.append("Client say :"+ message_received);
+                        }
+        /* Catch: captura las excepcion y se especifica cual puede ocurrir */  
+                }catch(Exception ex){
+           
+        /* printStackTrace: es una herramienta utilizada para manejar excepciones y errores */
+                    ex.printStackTrace();
+                }
+                
+            }
+        });
+        /* Un thread se pone a trabajar con el metodo start, en este caso es para que se ponga a funcionar cuaando se llama al metodo read*/
+        read_thread.start();
     }
         public static void main(String [] args){
         /* Instancia para que pueda arrancar el constructor de la interfaz*/
