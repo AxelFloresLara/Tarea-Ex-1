@@ -126,6 +126,29 @@ public class Server {
         /* Un thread se pone a trabajar con el metodo start, en este caso es para que se ponga a funcionar cuaando se llama al metodo read*/
         read_thread.start();
     }
+    public void write(){
+        Thread write_thread = new Thread(new Runnable(){
+            public void run(){
+                try{
+            /* El constructor recibe al cliente, que es con quien se comunica y el getoutput obtiene la salida, además, el true nos permite enviar mensajes*/
+                    writer = new PrintWriter(client.getOutputStream(), true);
+            /* Se hace uso del botón para el envio del mensaje, Se agrega un escucha, en este caso el ActionListener */
+                    send_button.addActionListener(new ActionListener(){
+                /* Se ejecuta cada vez que se le da al boton enviar */ 
+                        public void actionPerformed(ActionEvent e){
+                    /* Se obtiene el mensaje que posea esa caja de texto y se guarda en la variable send_mensaje*/
+                            String send_message = message.getText();
+                    /* Luego de obtenido el mensaje, se envía*/
+                            writer.println(send_message);         
+                        }
+                    });
+                }catch(Exception ex){
+                    ex.printStackTrace();        
+                }
+            }
+        });
+        write_thread.start();
+    }
         public static void main(String [] args){
         /* Instancia para que pueda arrancar el constructor de la interfaz*/
         new Server();
