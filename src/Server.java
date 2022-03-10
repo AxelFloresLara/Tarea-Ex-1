@@ -60,7 +60,7 @@ public class Server {
     /* titulo del boton enviar*/
         send_button = new JButton("Send");
     /* Personalizar fuente de la letra que va contenida en el boton de enviar*/
-        send_button.setFont(new Font("Serif", Font.ITALIC, 20));
+        send_button.setFont(new Font("Arial", Font.ITALIC, 20));
     /* Personalizar color del fondo del boton*/
         send_button.setBackground(Color.gray);
     /* Tamaño del cuadro blanco donde se reciben los mensajes*/
@@ -91,7 +91,7 @@ public class Server {
         window_chat.setResizable(false);
     /* Cambiar visibilidad de la ventana*/
         window_chat.setVisible(true);
-        
+      
         Thread principal = new Thread(new Runnable(){
             public void run(){
                 try{
@@ -100,7 +100,7 @@ public class Server {
                     while(true){
                         /* siempre va a aceptar las conexiones que vengan a este puerto*/
                         client = server.accept();
-                        /*metodos para intercambio de mensajes*/
+                        /* metodos para intercambio de mensajes */
                         read();
                         write();
                     }
@@ -131,7 +131,7 @@ public class Server {
                             String message_received = reader.readLine();
                     
                     /* ahora debemos adjuntar el mensaje que nos envían al campo en blanco llamado chat_area, con el append se agrega texto, concatenamos el mensaje recibido al "client say"*/
-                            chat_area.append("Client say :"+ message_received);
+                            chat_area.append("Client say's: "+ message_received);
                         }
         /* Catch: captura las excepcion y se especifica cual puede ocurrir */  
                 }catch(Exception ex){

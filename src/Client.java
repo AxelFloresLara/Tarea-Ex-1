@@ -1,16 +1,12 @@
 import java.net.*;
+
 import java.io.*;
+
 import java.awt.event.*;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+
+import java.awt.*;
+
+import javax.swing.*;
 
 public class Client {
 
@@ -76,6 +72,19 @@ public class Client {
 
         window_chat.setVisible(true);
         
+        Thread principal = new Thread(new Runnable(){
+           public void run(){
+                try{
+                    /* se define la ip local y el mismo puerto asignado al servidor */
+                client = new Socket("127.0.0.1", 9000);
+                read();
+                write();          
+                }catch(Exception ex){
+                    ex.printStackTrace();
+            }    }
+        });
+        principal.start();
+        
     }
     public void read(){
         
@@ -85,7 +94,7 @@ public class Client {
                     reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
                         while(true){
                             String message_received = reader.readLine();
-                            chat_area.append("Server say :"+ message_received);
+                            chat_area.append("Server say's: "+ message_received);
                         }
                 }catch(Exception ex){
                     ex.printStackTrace();
@@ -115,6 +124,7 @@ public class Client {
     }    
     
     public static void main(String [] args){
+        /* clase cliente tiene al constructor new Cliente que está en Public Cliente y contiene a MakeInterface, makeinterface hace la interfaz, pone a trabajar los metodos y conecta el socket mediante un thread con ciclo infinito*/
         new Client();
 
     }    
