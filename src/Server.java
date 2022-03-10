@@ -91,6 +91,25 @@ public class Server {
         window_chat.setResizable(false);
     /* Cambiar visibilidad de la ventana*/
         window_chat.setVisible(true);
+        
+        Thread principal = new Thread(new Runnable(){
+            public void run(){
+                try{
+                    /* se define el puerto del servidor, uno alto para asegurar que esté libre*/
+                server = new ServerSocket(9000);   
+                    while(true){
+                        /* siempre va a aceptar las conexiones que vengan a este puerto*/
+                        client = server.accept();
+                        /*metodos para intercambio de mensajes*/
+                        read();
+                        write();
+                    }
+                }catch(Exception ex){
+                    ex.printStackTrace();
+                }         
+            }
+        });
+        principal.start();
     }
     /*Crear metodo para leer los mensajes*/
     public void read(){

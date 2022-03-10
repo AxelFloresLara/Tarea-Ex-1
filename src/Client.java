@@ -28,6 +28,12 @@ public class Client {
     
     JPanel stock_send_button = null;
     
+    Socket client = null;
+    
+    PrintWriter writer = null;
+    
+    BufferedReader reader = null;
+    
     public Client(){
         MakeInterface();
     }
@@ -71,6 +77,42 @@ public class Client {
         window_chat.setVisible(true);
         
     }
+    public void read(){
+        
+        Thread read_thread = new Thread(new Runnable(){
+            public void run(){
+                try{
+                    reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                        while(true){
+                            String message_received = reader.readLine();
+                            chat_area.append("Server say :"+ message_received);
+                        }
+                }catch(Exception ex){
+                    ex.printStackTrace();
+                }
+                
+            }
+        });
+        read_thread.start();
+    }
+    public void write(){
+        Thread write_thread = new Thread(new Runnable(){
+            public void run(){
+                try{
+                    writer = new PrintWriter(client.getOutputStream(), true);
+                    send_button.addActionListener(new ActionListener(){
+                        public void actionPerformed(ActionEvent e){
+                            String send_message = message.getText();
+                            writer.println(send_message);         
+                        }
+                    });
+                }catch(Exception ex){
+                    ex.printStackTrace();        
+                }
+            }
+        });
+        write_thread.start();
+    }    
     
     public static void main(String [] args){
         new Client();
