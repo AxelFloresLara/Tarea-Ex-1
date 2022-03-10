@@ -11,7 +11,7 @@ import java.awt.*;
 import javax.swing.*;
 
 public class Server {
-    /* Se deben definir los primeros objetos que van a componer la interfaz*/
+    /* Se deben definir los objetos que van a componer la interfaz*/
     
     /* Jframe: es utilizado para generar la ventana inicial, la cual será personalizada posteriormente */
     JFrame window_chat = null;
@@ -31,6 +31,15 @@ public class Server {
     /* Jpanel: es un contenedor de componentes, botones, campos de texto etc...*/
     JPanel stock_chat = null;
     JPanel stock_send_button = null;
+    
+    /* ServerSocket: Nos permite manipular la conxexion desde el servidor */
+    ServerSocket server = null; 
+    
+    /* Socket: Nos permite implementar la conexión por parte del cliente*/
+    Socket client = null;
+    
+    /* Buffered reader: Lee texto de un flujo de entrada de caracteres, almacenando en búfer los caracteres para proporcionar una lectura eficiente de caracteres*/
+    BufferedReader  reader = null;
     
     /* Constructor de la clase*/
     public Server(){
