@@ -1,13 +1,16 @@
-    /* permite realizar conexiones y transacciones a través de la red */
+/* permite realizar conexiones y transacciones a través de la red */
 import java.net.*;
-    /* encargado de gestionar las operaciones de entrada/salida */
+
+/* encargado de gestionar las operaciones de entrada/salida */
 import java.io.*;
-    /* este paquete define eventos y detectores de eventos, así como adaptadores de detectores de eventos*/
+
+/* este paquete define eventos y detectores de eventos, así como adaptadores de detectores de eventos*/
 import java.awt.event.*;
 
-    /*importar abstract window Toolkit (kit de herramientas grafico) */
+/*importar abstract window Toolkit (kit de herramientas grafico) */
 import java.awt.*;
-    /* importar java swing (biblioteca grafica)*/
+
+/* importar java swing (biblioteca grafica)*/
 import javax.swing.*;
 
 public class Server {
@@ -46,6 +49,7 @@ public class Server {
     
     /* Constructor de la clase*/
     public Server(){
+        
     /* Constructor del metodo MakeInterface*/
         MakeInterface();
     }
@@ -55,40 +59,58 @@ public class Server {
             
     /* Asignación del titulo a la ventana*/
         window_chat = new JFrame("Server");
+        
     /* campo de texto del mensaje*/
         message = new JTextField(4);
+        
     /* titulo del boton enviar*/
         send_button = new JButton("Send");
+        
     /* Personalizar fuente de la letra que va contenida en el boton de enviar*/
-        send_button.setFont(new Font("Arial", Font.ITALIC, 20));
+        send_button.setFont(new Font("Arial", Font.ROMAN_BASELINE, 20));
+        
     /* Personalizar color del fondo del boton*/
-        send_button.setBackground(Color.gray);
+        send_button.setBackground(Color.lightGray);
+        
     /* Tamaño del cuadro blanco donde se reciben los mensajes*/
         chat_area = new JTextArea(10, 12);
+        
     /* contenedor de chat */
         stock_chat = new JPanel();
+        
     /* personalizacion del contenedor */
         stock_chat.setLayout(new GridLayout(1,1));
+        
     /* Añadir la barra de desplazamiento */
         scroll = new JScrollPane(chat_area);
+        
     /* añadir al contenedor del chat la barra*/
         stock_chat.add(scroll);
+        
     /* contenedor2 */
         stock_send_button = new JPanel();
+        
     /* Personalizacion de contenedor2*/
         stock_send_button.setLayout(new GridLayout(1,2));
+        
     /* añadir mensaje */
         stock_send_button.add(message);
+        
     /* añadir boton al contenedor */
         stock_send_button.add(send_button);
+        
     /* Añadir Layout a la ventana principal (JFrame), para ubicar el stock_chat */
         window_chat.add(stock_chat, BorderLayout.NORTH);
+        
     /* Añadir Layout para ubicar el stock_send_button*/
         window_chat.add(stock_send_button, BorderLayout.SOUTH);
+        
     /* Setear el tamaño de la ventana principal (window_chat) con los parametros (ancho, alto) */
-        window_chat.setSize(300, 240);
+        window_chat.setSize(300, 235);
+        
     /* hacer que no sea posible cambiarle el tamaño a la ventana */
         window_chat.setResizable(false);
+        
     /* Cambiar visibilidad de la ventana*/
         window_chat.setVisible(true);
       
@@ -96,7 +118,7 @@ public class Server {
             public void run(){
                 try{
                     /* se define el puerto del servidor, uno alto para asegurar que esté libre*/
-                server = new ServerSocket(9000);   
+                server = new ServerSocket(1200);   
                     while(true){
                         /* siempre va a aceptar las conexiones que vengan a este puerto*/
                         client = server.accept();
@@ -151,12 +173,16 @@ public class Server {
                 try{
             /* El constructor recibe al cliente, que es con quien se comunica y el getoutput obtiene la salida, además, el true nos permite enviar mensajes*/
                     writer = new PrintWriter(client.getOutputStream(), true);
+                    
             /* Se hace uso del botón para el envio del mensaje, Se agrega un escucha, en este caso el ActionListener */
                     send_button.addActionListener(new ActionListener(){
+                        
                 /* Se ejecuta cada vez que se le da al boton enviar */ 
                         public void actionPerformed(ActionEvent e){
+                            
                     /* Se obtiene el mensaje que posea esa caja de texto y se guarda en la variable send_mensaje*/
                             String send_message = message.getText();
+                            
                     /* Luego de obtenido el mensaje, se envía*/
                             writer.println(send_message);         
                         }

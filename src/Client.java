@@ -41,9 +41,9 @@ public class Client {
 
         send_button = new JButton("Send");
 
-        send_button.setFont(new Font("Serif", Font.ITALIC, 20));
+        send_button.setFont(new Font("Arial", Font.ROMAN_BASELINE, 20));
 
-        send_button.setBackground(Color.gray);
+        send_button.setBackground(Color.lightGray);
 
         chat_area = new JTextArea(10, 12);
 
@@ -66,7 +66,7 @@ public class Client {
 
         window_chat.add(stock_send_button, BorderLayout.SOUTH);
 
-        window_chat.setSize(300, 240);
+        window_chat.setSize(300, 235);
 
         window_chat.setResizable(false);
 
@@ -76,7 +76,7 @@ public class Client {
            public void run(){
                 try{
                     /* se define la ip local y el mismo puerto asignado al servidor */
-                client = new Socket("127.0.0.1", 9000);
+                client = new Socket("127.0.0.1", 1200);
                 read();
                 write();          
                 }catch(Exception ex){
