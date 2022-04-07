@@ -6,10 +6,12 @@ import java.awt.event.*;
 
 import java.awt.*;
 
+import java.util.logging.*;
+
 import javax.swing.*;
 
 public class Client {
-
+    
     JFrame window_chat = null;
     
     JTextField message = null;
@@ -29,13 +31,15 @@ public class Client {
     PrintWriter writer = null;
     
     BufferedReader reader = null;
-    
+        
     public Client(){
         MakeInterface();
     }
         public void MakeInterface(){
 
         window_chat = new JFrame("Client");
+        
+        window_chat.setLocation(250, 200);
 
         message = new JTextField(4);
 
@@ -71,7 +75,7 @@ public class Client {
         window_chat.setResizable(false);
 
         window_chat.setVisible(true);
-        
+               
         Thread principal = new Thread(new Runnable(){
            public void run(){
                 try{
@@ -80,7 +84,16 @@ public class Client {
                 read();
                 write();          
                 }catch(Exception ex){
-                    ex.printStackTrace();
+                    try {
+                        /* se da la excepcion cuando no se ha iniciado el servidor y se inicia el ciente*/
+                        Log my_log = new Log("scbr.txt");
+                        my_log.logger.setLevel(Level.WARNING);
+                        my_log.logger.severe("Servidor aún no iniciado");
+                    } catch (SecurityException ex1) {
+                        Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex1);
+                    } catch (IOException ex1) {
+                        Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex1);
+                    }
             }    }
         });
         principal.start();
@@ -90,14 +103,15 @@ public class Client {
         
         Thread read_thread = new Thread(new Runnable(){
             public void run(){
-                try{
+                Logger Log1 = Logger.getLogger(String.valueOf(Client.class));
+                try{              
                     reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
                         while(true){
                             String message_received = reader.readLine();
                             chat_area.append("Server say's: "+ message_received);
                         }
                 }catch(Exception ex){
-                    ex.printStackTrace();
+                    ex.printStackTrace();        
                 }
                 
             }
@@ -107,16 +121,20 @@ public class Client {
     public void write(){
         Thread write_thread = new Thread(new Runnable(){
             public void run(){
+                Logger Log2 = Logger.getLogger(String.valueOf(Client.class));
                 try{
+                    
                     writer = new PrintWriter(client.getOutputStream(), true);
                     send_button.addActionListener(new ActionListener(){
                         public void actionPerformed(ActionEvent e){
                             String send_message = message.getText();
+                            Log2.info("Mensaje enviado "+ send_message);
                             writer.println(send_message);         
                         }
                     });
                 }catch(Exception ex){
                     ex.printStackTrace();        
+        
                 }
             }
         });

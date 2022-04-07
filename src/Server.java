@@ -13,9 +13,11 @@ import java.awt.*;
 /* importar java swing (biblioteca grafica)*/
 import javax.swing.*;
 
+import java.util.logging.*;
+
+
 public class Server {
-    /* Se deben definir los objetos que van a componer la interfaz*/
-    
+    /* Se deben definir los objetos que van a componer la interfaz*/  
     /* Jframe: es utilizado para generar la ventana inicial, la cual será personalizada posteriormente */
     JFrame window_chat = null;
     
@@ -59,6 +61,7 @@ public class Server {
             
     /* Asignación del titulo a la ventana*/
         window_chat = new JFrame("Server");
+        window_chat.setLocation(250, 200);
         
     /* campo de texto del mensaje*/
         message = new JTextField(4);
@@ -116,9 +119,11 @@ public class Server {
       
         Thread principal = new Thread(new Runnable(){
             public void run(){
+            Logger Log = Logger.getLogger(String.valueOf(Server.class));
                 try{
                     /* se define el puerto del servidor, uno alto para asegurar que esté libre*/
-                server = new ServerSocket(1200);   
+                server = new ServerSocket(1200);
+                Log.info("Servidor iniciado");
                     while(true){
                         /* siempre va a aceptar las conexiones que vengan a este puerto*/
                         client = server.accept();
@@ -127,7 +132,16 @@ public class Server {
                         write();
                     }
                 }catch(Exception ex){
-                    ex.printStackTrace();
+                    try{
+                        Log my_log = new Log("scbr.txt");
+                        my_log.logger.setLevel(Level.WARNING);
+                        my_log.logger.severe("Puerto ocupado");
+                    } catch (SecurityException ex1) {
+                        Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex1);
+                    } catch (IOException ex1) {
+                        Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex1);
+                    }
+                    
                 }         
             }
         });
@@ -135,6 +149,7 @@ public class Server {
     }
     /*Crear metodo para leer los mensajes*/
     public void read(){
+        Logger Log1 = Logger.getLogger(String.valueOf(Server.class));
         /*Thread: clase base de Java para definir hilos de ejecución concurrentes dentro de un mismo programa, Son los objetos los que actúan concurrentemente con otros */
         /*Runnable proporciona un método alternativo a la utilización de la clase Thread, Esto ocurre cuando dicha clase, que se desea ejecutar en un hilo independiente deba extender alguna otra clase.*/
         Thread read_thread = new Thread(new Runnable(){
@@ -151,15 +166,12 @@ public class Server {
                         while(true){
                     /* Todo lo que me envíe el cliente le voy a estar leyendo y lo voy a guardar en la variable de tipo str llamada message_received */
                             String message_received = reader.readLine();
-                    
+                            Log1.info("Mensaje recibido "+ message_received);
                     /* ahora debemos adjuntar el mensaje que nos envían al campo en blanco llamado chat_area, con el append se agrega texto, concatenamos el mensaje recibido al "client say"*/
                             chat_area.append("Client say's: "+ message_received);
                         }
         /* Catch: captura las excepcion y se especifica cual puede ocurrir */  
-                }catch(Exception ex){
-           
-        /* printStackTrace: es una herramienta utilizada para manejar excepciones y errores */
-                    ex.printStackTrace();
+                }catch(Exception ex){  
                 }
                 
             }
@@ -169,8 +181,10 @@ public class Server {
     }
     public void write(){
         Thread write_thread = new Thread(new Runnable(){
+            Logger Log2 = Logger.getLogger(String.valueOf(Server.class));
             public void run(){
                 try{
+                    
             /* El constructor recibe al cliente, que es con quien se comunica y el getoutput obtiene la salida, además, el true nos permite enviar mensajes*/
                     writer = new PrintWriter(client.getOutputStream(), true);
                     
@@ -182,6 +196,7 @@ public class Server {
                             
                     /* Se obtiene el mensaje que posea esa caja de texto y se guarda en la variable send_mensaje*/
                             String send_message = message.getText();
+                            Log2.info("Mensaje enviado "+ send_message);
                             
                     /* Luego de obtenido el mensaje, se envía*/
                             writer.println(send_message);         

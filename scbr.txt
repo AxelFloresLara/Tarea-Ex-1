@@ -1,0 +1,6 @@
+abr. 06, 2022 10:53:28 P. M. Client$1 run
+SEVERE: Servidor aún no iniciado
+abr. 06, 2022 10:54:42 P. M. Client$1 run
+SEVERE: Servidor aún no iniciado
+abr. 06, 2022 10:58:16 P. M. Client$1 run
+SEVERE: Servidor aún no iniciado
