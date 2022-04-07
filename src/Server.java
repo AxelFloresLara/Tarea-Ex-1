@@ -133,6 +133,7 @@ public class Server {
                     }
                 }catch(Exception ex){
                     try{
+                        /* excepcion se da cuando se ejecuta 2 veces seguidas el servidor*/
                         Log my_log = new Log("scbr.txt");
                         my_log.logger.setLevel(Level.WARNING);
                         my_log.logger.severe("Puerto ocupado");
